@@ -1,13 +1,11 @@
 import { Sequelize } from 'sequelize';
 import log from './log.js';
 
-
-
 let connection = {
   host: 'localhost',
   port: 5432, // Adjust to the correct PostgreSQL port
   user: 'postgres',
-  password: 'vaishu',
+  password: process.env.DB_PW,
   database: 'postgres',
 };
 
