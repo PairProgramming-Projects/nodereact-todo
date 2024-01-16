@@ -28,11 +28,11 @@ const TodoList = ( { allTodos }) => {
   return (
     <List sx={{ width: '100%', maxWidth: 480, bgcolor: 'background.paper' }}>
       {allTodos.map((todo) => {
-        const labelId = `checkbox-list-label-${todo}`;
+        const labelId = `checkbox-list-label-${todo.id}`;
 
         return (
           <ListItem
-            key={todo}
+            key={todo.id}
             secondaryAction={
               <IconButton edge="end" aria-label="comments">
                 {/* to be replaced by an edit and delete icons */}
@@ -52,7 +52,7 @@ const TodoList = ( { allTodos }) => {
                   inputProps={{ 'aria-labelledby': labelId }}
                 />
               </ListItemIcon> */}
-              <ListItemText id={labelId} primary={todo} />
+              <ListItemText id={labelId} primary={todo.title} />
             </ListItemButton>
           </ListItem>
         );
