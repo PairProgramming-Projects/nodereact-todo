@@ -1,5 +1,5 @@
-// import { useState, useEffect } from 'react';
-// import axios from 'axios';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import TextField from '@mui/material/TextField';
@@ -11,23 +11,24 @@ import TodoList from './components/TodoList';
 import './App.css';
 
 const App = () => {
-    const todos = ['Do laundry', 'Call dentist', 'Take down Christmas decorations'];
-    // const [todos, setTodos] = useState([]);
+    // const todos = ['Do laundry', 'Call dentist', 'Take down Christmas decorations'];
+    const [todos, setTodos] = useState([]);
+    const email = 'hello@mail.com';
     // const [fetchTodosError, setFetchTodosError] = useState(null);
     // const [saveTodoError, setSaveTodoError] = useState(null);
 
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //     //   try {
-    //         const { data } = await axios.get(`${process.env.BASE_API}/api/Todos/All`);
-    //         setTodos(data);
-    //     //   } catch (err) {
-    //     //     setFetchRecipesError(err);
-    //     //   }
-    //     //   setLoadingState(false);
-    //     };
-    //     fetchData();
-    //   }, []);
+    useEffect(() => {
+        const fetchData = async () => {
+        //   try {
+            const { data } = await axios.get(`${import.meta.env.BASE_API}/api/Todos/${email}`);
+            setTodos(data);
+        //   } catch (err) {
+        //     setFetchRecipesError(err);
+        //   }
+        //   setLoadingState(false);
+        };
+        fetchData();
+      }, []);
 
     return (
         <Container maxWidth="xl">
