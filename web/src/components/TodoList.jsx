@@ -7,6 +7,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 // import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
+import EditIcon from '@mui/icons-material/Edit';
 import CommentIcon from '@mui/icons-material/Comment';
 
 const TodoList = ( { allTodos }) => {
@@ -36,6 +37,7 @@ const TodoList = ( { allTodos }) => {
             secondaryAction={
               <IconButton edge="end" aria-label="comments">
                 {/* to be replaced by an edit and delete icons */}
+                <EditIcon color="primary"></EditIcon>
                 <CommentIcon color="primary"/>
               </IconButton>
             }

@@ -4,7 +4,7 @@ services:
     image: postgres:15.3-alpine
     container_name: postgres
     environment:
-      POSTGRES_DB: nodereact-todo
+      POSTGRES_DB: postgres
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: vaishu
     logging:

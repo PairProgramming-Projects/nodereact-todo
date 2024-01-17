@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Box from '@mui/material/Box';
+// import { Controller, useForm } from 'react-hook-form';
+// import { useForm } from 'react-hook-form';
 import Container from '@mui/material/Container';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
@@ -11,15 +13,16 @@ import TodoList from './components/TodoList';
 import './App.css';
 
 const App = () => {
-    // const todos = ['Do laundry', 'Call dentist', 'Take down Christmas decorations'];
     const userEmail = 'example@email.com'
     const [todos, setTodos] = useState([]);
+    // const [inputValue, setInputValue] = useState('');
     const [data, setData] = useState({
         user_email:  'example@email.com',
-        title: null,
+        title: '',
         progress: 0,
         date: new Date(),
       })
+
     const getTodos = async () => {
         try {
           const response = (
@@ -27,21 +30,20 @@ const App = () => {
           ).data
           console.log('response:', response)
           setTodos(response)
-          
         } catch (err) {
           console.log(err)
         }
       }
 
       const handleChange = (e) => {
-        const {value } = e.target
+        const { value } = e.target
             setData((data) => ({
-                ...data, title:value
+                ...data, title: value
             }))
             console.log(data)
         };
 
-      const postData = async (e) => {
+      const handleSubmit = async (e) => {
         e.preventDefault()
         try {
           const response = await axios.post('http://localhost:8000/todos/create', {
@@ -52,31 +54,27 @@ const App = () => {
             }
           })
           getTodos()
+          setData( { title: '' } )
           console.log('response:', response)
         } catch (error) {
           console.log(error)
         }
       }
-    
 
       useEffect(() => getTodos, [])
 
-
-    // const [fetchTodosError, setFetchTodosError] = useState(null);
-    // const [saveTodoError, setSaveTodoError] = useState(null);
-
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //     //   try {
-    //         const { data } = await axios.get(`${process.env.BASE_API}/api/Todos/All`);
-    //         setTodos(data);
-    //     //   } catch (err) {
-    //     //     setFetchRecipesError(err);
-    //     //   }
-    //     //   setLoadingState(false);
-    //     };
-    //     fetchData();
-    //   }, []);
+    //   const defaultValues = todos ? {
+    //     ...todo,
+    //   } : undefined;
+    //   const {
+    //     handleSubmit,
+    //     setError,
+    //     control,
+    //     formState: { errors, isSubmitting },
+    //   } = useForm({
+    //     resolver: yupResolver(validationSchema),
+    //     defaultValues,
+    //   });
 
     return (
         <Container maxWidth="xl">
@@ -89,8 +87,8 @@ const App = () => {
                 noValidate
                 autoComplete="off"
             >
-                <TextField required id="standard" label="Task" variant="standard" value={data.title} onChange={handleChange} />
-                <Button variant="outlined" startIcon={<AddIcon />} color="primary" aria-label="add todo" onClick={postData}>
+                <TextField required id="standard" label="Task" variant="standard" value={data.title ? data.title : ''} onChange={handleChange} />
+                <Button variant="outlined" startIcon={<AddIcon />} color="primary" aria-label="add todo" onClick={handleSubmit}>
                 Add
                 </Button>
             </Box>
