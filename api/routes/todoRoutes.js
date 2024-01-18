@@ -35,14 +35,25 @@ router.get('/:userEmail', async (req, res) => {
 })
 
 router.put('/update/:id', async (req, res) => {
+    const values = {
+        user_email: req.body.data.user_email,
+        title: req.body.data.title,
+        progress: req.body.data.progress,
+        date: req.body.data.date,
+      }
     const { id } = req.params
-    // console.log('email:', userEmail)
+    console.log('Put method values:', values)
     try {
-      const updatedTodo = await TodoModel.findOne({
-        where: { id : id },
-      })
-      console.log('Updated todo item: ', updatedTodo)
-      res.send(updatedTodo)
+      const updatedTodo = await TodoModel.update(
+        {
+            title: values.title
+        },
+        {
+            where: { id },
+        })
+        updatedTodo = updatedTodo.save();
+        console.log('Updated todo item: ', updatedTodo)
+        res.status(200).json({ status: 'Success', message: 'Data updated successfully' });
     } catch (err) {
       log.error(err)
     }
