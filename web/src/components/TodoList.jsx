@@ -1,15 +1,17 @@
 /* eslint-disable react/prop-types */
 // import { useState } from 'react';
+// import ListItemIcon from '@mui/material/ListItemIcon';
+// import Checkbox from '@mui/material/Checkbox';
+// import CommentIcon from '@mui/icons-material/Comment';
+import axios from 'axios'
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
-// import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-// import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
-import CommentIcon from '@mui/icons-material/Comment';
+import DeleteIcon from '@mui/icons-material/Delete';
 
-const TodoList = ( { allTodos }) => {
+const TodoList = ( { allTodos, getTodos }) => {
     // toggle probably not needed until there is a delete all feature
 //   const [checked, setChecked] = useState([0]);
 
@@ -25,6 +27,19 @@ const TodoList = ( { allTodos }) => {
 //     setChecked(newChecked);
 //   };
 
+const deleteTodo = async(id)=>{
+  try {
+    const deleteResponse = await axios.delete(`http://localhost:8000/todos/${id}`)
+    console.log(deleteResponse)
+    
+    if(deleteResponse.status === 204){
+      getTodos()
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
   return (
     <List sx={{ width: '100%', maxWidth: 480, bgcolor: 'background.paper' }}>
       {allTodos.map((todo) => {
@@ -34,9 +49,12 @@ const TodoList = ( { allTodos }) => {
           <ListItem
             key={todo.id}
             secondaryAction={
-              <IconButton edge="end" aria-label="comments">
-                {/* to be replaced by an edit and delete icons */}
-                <CommentIcon color="primary"/>
+              // <IconButton edge="end" aria-label="comments">
+              //   {/* to be replaced by an edit and delete icons */}
+              //   <CommentIcon color="primary"/>
+              // </IconButton>
+              <IconButton edge="end" aria-label="delete" color='secondary'onClick={()=>deleteTodo(todo.id)}>
+                <DeleteIcon />
               </IconButton>
             }
             disablePadding

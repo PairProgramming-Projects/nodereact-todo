@@ -16,7 +16,7 @@ const App = () => {
     const [todos, setTodos] = useState([]);
     const [data, setData] = useState({
         user_email:  'example@email.com',
-        title: null,
+        title: '',
         progress: 0,
         date: new Date(),
       })
@@ -94,7 +94,7 @@ const App = () => {
                 Add
                 </Button>
             </Box>
-            <TodoList allTodos={todos} />
+            <TodoList allTodos={todos} getTodos={getTodos} />
 
         </Container>
     )
