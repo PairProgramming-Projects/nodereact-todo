@@ -101,9 +101,9 @@ const App = () => {
             ) }
             {/* <TodoList allTodos={todos} handleEditTodo={handleEdit}/> */}
             <List sx={{ width: '100%', maxWidth: 480, bgcolor: 'background.paper' }}>
-                {todos.map((todo) => {
-                    <TodoItem todoItem={todo} onEditClick={handleEdit} />
-                })}
+                {todos.map((todo) => (
+                    <TodoItem todoItem={todo} onEditClick={handleEdit} key={todo.id}/>
+                ))}
             </List>
         </Container>
     )
