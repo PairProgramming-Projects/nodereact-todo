@@ -34,4 +34,18 @@ router.get('/:userEmail', async (req, res) => {
   }
 })
 
+router.put('/update/:id', async (req, res) => {
+    const { id } = req.params
+    // console.log('email:', userEmail)
+    try {
+      const updatedTodo = await TodoModel.findOne({
+        where: { id : id },
+      })
+      console.log('Updated todo item: ', updatedTodo)
+      res.send(updatedTodo)
+    } catch (err) {
+      log.error(err)
+    }
+  })
+
 export default router
