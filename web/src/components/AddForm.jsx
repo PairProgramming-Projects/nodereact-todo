@@ -14,7 +14,14 @@ const AddForm = ( { todo, onAddInputChange, onAddFormSubmit } ) => {
             noValidate
             autoComplete="off"
         >
-            <TextField required id="standard" label="Task" variant="standard" value={todo.title ? todo.title : ''} onChange={onAddInputChange} />
+            <TextField
+                required
+                id="standard"
+                label="Task"
+                variant="standard"
+                value={todo.title ? todo.title : ''}
+                onChange={onAddInputChange}
+            />
             <Button variant="outlined" startIcon={<AddIcon />} color="primary" aria-label="add todo" onClick={onAddFormSubmit}>
             Add
             </Button>
