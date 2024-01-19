@@ -15,5 +15,5 @@ CREATE TABLE IF NOT EXISTS users (
   hashed_password VARCHAR(255)
 );
 
--- INSERT INTO todo_app_schema.todos (user_email, title, progress, date)
+-- INSERT INTO node_react_schema.todos (user_email, title, progress, date)
 -- VALUES ('example@email.com', 'Example Todo', 0, '2023-01-01');

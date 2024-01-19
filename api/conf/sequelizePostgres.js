@@ -5,7 +5,7 @@ import log from './log.js';
 
 let connection = {
   host: 'localhost',
-  port: 5432, // Adjust to the correct PostgreSQL port
+  port: 5432,
   user: 'postgres',
   password: 'vaishu',
   database: 'postgres',

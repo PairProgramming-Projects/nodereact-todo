@@ -22,16 +22,31 @@ router.post('/create', async (req, res) => {
 
 router.get('/:userEmail', async (req, res) => {
   const { userEmail } = req.params
-  // console.log('email:', userEmail)
   try {
     const todoList = await TodoModel.findAll({
       where: { user_email: userEmail },
     })
-    // console.log('todo list: ', todoList)
     res.send(todoList)
   } catch (err) {
     log.error(err)
   }
 })
+
+router.put('/update/:id', async (req, res) => {
+    const { id } = req.params;
+    const { title } = req.body;
+    try {
+        await TodoModel.update(
+        {
+            title
+        },
+        {
+            where: { id },
+        })
+        res.status(204).json({ status: 'Success', message: 'Data updated successfully' });
+    } catch (err) {
+      log.error(err)
+    }
+  })
 
 export default router
