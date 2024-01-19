@@ -57,28 +57,6 @@ const App = () => {
             console.log(error)
         }
     }
-    
-    const handleEditInputChange = (e) => {
-        setCurrentTodo({ ...currentTodo, title: e.target.value });
-    }
-    
-    const handleEditClick = (todo) => {
-        setIsEditing(true);
-        setCurrentTodo({ ...todo });
-    }
-    
-    const handleTodoUpdate = async (id, todoToUpdate) => {
-        console.log(todoToUpdate)
-        const request = { ...todoToUpdate, userEmail: 'example@email.com' };
-        await axios.put(`http://localhost:8000/todos/update/${id}`, request);
-        setIsEditing(false);
-        getTodos();
-    }
-
-    const handleEditFormSubmit = (e) => {
-        e.preventDefault();
-        handleTodoUpdate(currentTodo.id, currentTodo);
-    }
         
     useEffect(() => getTodos, [])
 
@@ -88,16 +66,16 @@ const App = () => {
             { isEditing ? (
                 <EditForm
                     currentTodo={currentTodo}
+                    getTodos={getTodos}
                     setIsEditing={setIsEditing}
-                    onEditInputChange={handleEditInputChange}
-                    onEditFormSubmit={handleEditFormSubmit}
+                    setCurrentTodo={setCurrentTodo}
                 />
             ) : (
                 <AddForm todo={data} onAddInputChange={handleAddInputChange} onAddFormSubmit={handleAddFormSubmit} />
             )} 
             <List sx={{ width: '100%', maxWidth: 480, bgcolor: 'background.paper' }}>
                 { todos.map((todo) => (
-                            <TodoItem todoItem={todo} onEditClick={handleEditClick} key={todo.id} getTodos={getTodos}/>
+                            <TodoItem key={todo.id} todoItem={todo} getTodos={getTodos} isEditing={setIsEditing} setCurrentTodo={setCurrentTodo} />
                     ))
                 }
             </List>

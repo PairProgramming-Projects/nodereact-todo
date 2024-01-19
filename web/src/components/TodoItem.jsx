@@ -7,11 +7,10 @@ import EditIcon from '@mui/icons-material/Edit';
 import Tooltip from '@mui/material/Tooltip';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
-
 // import ListItemIcon from '@mui/material/ListItemIcon';
 // import CommentIcon from '@mui/icons-material/Comment';
 
-const TodoItem = ( { todoItem, onEditClick, getTodos } ) => {
+const TodoItem = ( { todoItem, getTodos, isEditing, setCurrentTodo } ) => {
 
     const deleteTodo = async(id)=>{
         try {
@@ -25,6 +24,12 @@ const TodoItem = ( { todoItem, onEditClick, getTodos } ) => {
           console.log(error)
         }
       }
+
+    const handleEditClick = (todo) => {
+        isEditing(true);
+        setCurrentTodo({ ...todo });
+    }
+
     return (
         <ListItem
             key={todoItem.id}
@@ -39,21 +44,15 @@ const TodoItem = ( { todoItem, onEditClick, getTodos } ) => {
                     <ListItemText id={todoItem.id} primary={todoItem.title} />
                 </ListItemButton>
                 <Tooltip title="Edit">
-                    <IconButton aria-label="edit todo" onClick={() => onEditClick(todoItem)}>
+                    <IconButton aria-label="edit todo" onClick={() => handleEditClick(todoItem)}>
                         <EditIcon color="primary" /> 
                     </IconButton>
                 </Tooltip>
                 <Tooltip title="Delete">
-                <IconButton edge="end" aria-label="delete" color='secondary'onClick={()=>deleteTodo(todoItem.id)}>
+                <IconButton edge="end" aria-label="delete" color='primary' onClick={()=>deleteTodo(todoItem.id)}>
                     <DeleteIcon />
                 </IconButton>
                 </Tooltip>
-                {/* For the delete functionality
-                <Tooltip title="Delete">
-                    <IconButton aria-label="delete todo" onClick={() => handleEditTodo(todo)}>
-                        <EditIcon color="primary" /> 
-                    </IconButton>
-                </Tooltip> */}
         </ListItem>
     )
 }
