@@ -28,7 +28,8 @@ const TodoModel = sequelizePostgres.define(
   },
   {
     schema: 'node_react_schema',
-    timestamps: false, // Disable timestamps for this model
+    timestamps: false,
+    underscored: true
   }
 )
 

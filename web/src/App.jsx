@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-// import { Controller, useForm } from 'react-hook-form';
-// import { useForm } from 'react-hook-form';
 import Container from '@mui/material/Container';
 import List from '@mui/material/List';
 import TodoItem from './components/TodoItem';
@@ -11,7 +9,6 @@ import './App.css';
 
 const App = () => {
     const userEmail = 'example@email.com';
-    // const [todo, setTodo] = useState("");
     const [todos, setTodos] = useState([]);
     const [data, setData] = useState({
         user_email:  'example@email.com',
@@ -26,7 +23,6 @@ const App = () => {
         try {
             const response = (
             await axios.get(`http://localhost:8000/todos/${userEmail}`)).data
-            console.log('getTodos response:', response)
             setTodos(response)
         } catch (err) {
           console.log(err)
@@ -39,7 +35,6 @@ const App = () => {
         ...data, title: value
         }))
         console.log(data)
-        // setTodo(e.target.value)
     };
 
         
@@ -56,36 +51,35 @@ const App = () => {
                 })
                 getTodos()
                 setData( { title: '' } )
-                console.log('response:', response)
+                console.log('add form submit response:', response)
             }
         } catch (error) {
             console.log(error)
         }
     }
     
-    const handleTodoUpdate = async (id, todoToUpdate) => {
-        const request = { ...todoToUpdate, userEmail: 'example@email.com' };
-        const updateResponse = await axios.put(`http://localhost:8000/todos/update/${id}`, request);
-        // const todoToUpdate = todos.find((id) => todo.id === updatedTodo.id);
-        console.log('Update response: ', updateResponse);
-        // const updatedItem = todos.map((todo) => {
-        //     return todo.id === id ? updatedTodo : todo;
-        // });
-        // setTodo(updatedItem);
-        setIsEditing(false);
-        getTodos();
+    const handleEditInputChange = (e) => {
+        setCurrentTodo({ ...currentTodo, title: e.target.value });
     }
     
-    const handleEditFormSubmit = (e) => {
-        e.preventDefault();
-        handleTodoUpdate(currentTodo.id, currentTodo);
-    }
-    
-    const handleEdit = async (todo) => {
+    const handleEditClick = (todo) => {
         setIsEditing(true);
         setCurrentTodo({ ...todo });
     }
     
+    const handleTodoUpdate = async (id, todoToUpdate) => {
+        console.log(todoToUpdate)
+        const request = { ...todoToUpdate, userEmail: 'example@email.com' };
+        await axios.put(`http://localhost:8000/todos/update/${id}`, request);
+        setIsEditing(false);
+        getTodos();
+    }
+
+    const handleEditFormSubmit = (e) => {
+        e.preventDefault();
+        handleTodoUpdate(currentTodo.id, currentTodo);
+    }
+        
     useEffect(() => getTodos, [])
 
     return (
@@ -95,7 +89,7 @@ const App = () => {
                 <EditForm
                     currentTodo={currentTodo}
                     setIsEditing={setIsEditing}
-                    onEditInputChange={handleEdit}
+                    onEditInputChange={handleEditInputChange}
                     onEditFormSubmit={handleEditFormSubmit}
                 />
             ) : (
@@ -103,7 +97,7 @@ const App = () => {
             )} 
             <List sx={{ width: '100%', maxWidth: 480, bgcolor: 'background.paper' }}>
                 { todos.map((todo) => (
-                            <TodoItem todoItem={todo} onEditClick={handleEdit} key={todo.id}/>
+                            <TodoItem todoItem={todo} onEditClick={handleEditClick} key={todo.id}/>
                     ))
                 }
             </List>

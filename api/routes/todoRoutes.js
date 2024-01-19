@@ -22,12 +22,10 @@ router.post('/create', async (req, res) => {
 
 router.get('/:userEmail', async (req, res) => {
   const { userEmail } = req.params
-  // console.log('email:', userEmail)
   try {
     const todoList = await TodoModel.findAll({
       where: { user_email: userEmail },
     })
-    // console.log('todo list: ', todoList)
     res.send(todoList)
   } catch (err) {
     log.error(err)
@@ -35,25 +33,17 @@ router.get('/:userEmail', async (req, res) => {
 })
 
 router.put('/update/:id', async (req, res) => {
-    const values = {
-        user_email: req.body.data.user_email,
-        title: req.body.data.title,
-        progress: req.body.data.progress,
-        date: req.body.data.date,
-      }
-    const { id } = req.params
-    console.log('Put method values:', values)
+    const { id } = req.params;
+    const { title } = req.body;
     try {
-      const updatedTodo = await TodoModel.update(
+        await TodoModel.update(
         {
-            title: values.title
+            title
         },
         {
             where: { id },
         })
-        updatedTodo = updatedTodo.save();
-        console.log('Updated todo item: ', updatedTodo)
-        res.status(200).json({ status: 'Success', message: 'Data updated successfully' });
+        res.status(204).json({ status: 'Success', message: 'Data updated successfully' });
     } catch (err) {
       log.error(err)
     }

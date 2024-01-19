@@ -23,7 +23,7 @@ const AddForm = ( { todo, onAddInputChange, onAddFormSubmit } ) => {
                 onChange={onAddInputChange}
             />
             <Button variant="outlined" startIcon={<AddIcon />} color="primary" aria-label="add todo" onClick={onAddFormSubmit}>
-            Add
+                Add
             </Button>
         </Box>
     )
