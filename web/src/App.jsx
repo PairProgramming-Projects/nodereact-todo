@@ -97,7 +97,7 @@ const App = () => {
             )} 
             <List sx={{ width: '100%', maxWidth: 480, bgcolor: 'background.paper' }}>
                 { todos.map((todo) => (
-                            <TodoItem todoItem={todo} onEditClick={handleEditClick} key={todo.id}/>
+                            <TodoItem todoItem={todo} onEditClick={handleEditClick} key={todo.id} getTodos={getTodos}/>
                     ))
                 }
             </List>
