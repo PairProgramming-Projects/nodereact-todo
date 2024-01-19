@@ -20,6 +20,22 @@ router.post('/create', async (req, res) => {
   }
 })
 
+//delete todo
+router.delete('/:id', async (req, res) => {
+  try {
+    const { id } = req.params
+    const deletedTodo = await TodoModel.destroy({
+      where: { id },
+    })
+    console.log('deleted todo : ', deletedTodo) // shows number of items deleted
+    return res
+      .status(204)
+      .json({ status: 'success', message: 'Data deleted successfully' })
+  } catch (err) {
+    console.log(err)
+  }
+})
+
 router.get('/:userEmail', async (req, res) => {
   const { userEmail } = req.params
   try {
