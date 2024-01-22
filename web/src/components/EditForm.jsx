@@ -2,13 +2,31 @@
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import axios from 'axios';
 
 const EditForm = ( {
-    currentTodo,
-    setIsEditing,
-    onEditInputChange,
-    onEditFormSubmit
+        currentTodo,
+        getTodos,
+        setIsEditing,
+        setCurrentTodo
     } ) => {
+        const handleEditInputChange = (e) => {
+            setCurrentTodo({ ...currentTodo, title: e.target.value });
+        }
+
+        const handleTodoUpdate = async (id, todoToUpdate) => {
+            console.log(todoToUpdate)
+            const request = { ...todoToUpdate, userEmail: 'example@email.com' };
+            await axios.put(`http://localhost:8000/todos/update/${id}`, request);
+            setIsEditing(false);
+            getTodos();
+        }
+    
+        const handleEditFormSubmit = (e) => {
+            e.preventDefault();
+            handleTodoUpdate(currentTodo.id, currentTodo);
+        }
+    
         return (
             <Box
                 component="form"
@@ -24,9 +42,9 @@ const EditForm = ( {
                     label="Task"
                     variant="standard"
                     value={currentTodo.title ? currentTodo.title : ''}
-                    onChange={onEditInputChange}
+                    onChange={handleEditInputChange}
                 />
-                <Button variant="outlined" color="primary" aria-label="add todo" onClick={onEditFormSubmit}>
+                <Button variant="outlined" color="primary" aria-label="add todo" onClick={handleEditFormSubmit}>
                     Update
                 </Button>
                 <Button variant="outlined" color="primary" aria-label="add todo" onClick={ () => setIsEditing(false) }>
