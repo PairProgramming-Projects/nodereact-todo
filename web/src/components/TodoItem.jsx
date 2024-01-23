@@ -5,6 +5,8 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import IconButton from '@mui/material/IconButton';
 import Checkbox from '@mui/material/Checkbox';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import EditIcon from '@mui/icons-material/Edit';
 import Tooltip from '@mui/material/Tooltip';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -42,18 +44,16 @@ const TodoItem = ( { todoItem, getTodos, isEditing, setCurrentTodo, checked, han
             // }
             disablePadding
         >
-            {/* <ListItemButton role={undefined}>
-                <ListItemText id={todoItem.id} primary={todoItem.title} />
-            </ListItemButton> */}
-            {console.log('todoItem ID', todoItem.id)}
-            <ListItemButton role={undefined} onClick={() => handleToggle(todoItem.id)} dense>
+            <ListItemButton role={undefined} dense> 
             <ListItemIcon>
                 <Checkbox
-                edge="start"
-                checked={checked.indexOf(todoItem.id) !== -1}
-                tabIndex={-1}
-                disableRipple
-                inputProps={{ 'aria-labelledby': todoItem.id }}
+                    icon={<RadioButtonUncheckedIcon />}
+                    checkedIcon={<CheckCircleIcon />}
+                    edge="start"
+                    checked={checked.indexOf(todoItem.id) !== -1}
+                    tabIndex={-1}
+                    inputProps={{ 'aria-labelledby': todoItem.id }}
+                    onChange={handleToggle(todoItem.id)}
                 />
             </ListItemIcon>
             <ListItemText id={todoItem.id} primary={todoItem.title} />
