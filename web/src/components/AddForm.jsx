@@ -1,13 +1,12 @@
 /* eslint-disable react/prop-types */
+
 import { useState } from 'react';
 import axios from 'axios';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import AddIcon from '@mui/icons-material/Add';
 
 const AddForm = ( { getTodos } ) => {
-
     const [data, setData] = useState({
         user_email:  'example@email.com',
         title: '',
@@ -48,7 +47,7 @@ const AddForm = ( { getTodos } ) => {
         <Box
             component="form"
             sx={{
-                '& > :not(style)': { m: 1, width: '25ch' },
+                '& > :not(style)': { m: 1, width: '50ch' },
             }}
             noValidate
             autoComplete="off"
@@ -59,9 +58,16 @@ const AddForm = ( { getTodos } ) => {
                 label="Task"
                 variant="standard"
                 value={data.title ? data.title : ''}
+                fullwidth="true"
                 onChange={handleAddInputChange}
             />
-            <Button variant="outlined" startIcon={<AddIcon />} color="primary" aria-label="add todo" onClick={handleAddFormSubmit}>
+            <Button
+                variant='contained'
+                color='secondary'
+                aria-label='add todo'
+                onClick={handleAddFormSubmit}
+                sx={{ maxWidth: 100 }}
+            >
                 Add
             </Button>
         </Box>

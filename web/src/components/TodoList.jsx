@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import Container from '@mui/material/Container';
+import Paper from '@mui/material/Paper';
 import List from '@mui/material/List';
 import TodoItem from './TodoItem';
 import AddForm from './AddForm';
@@ -8,6 +8,21 @@ import EditForm from './EditForm';
 import '../App.css';
 
 const TodoList = () => {
+    const [checked, setChecked] = useState([0]);
+
+    const handleToggle = (value) => () => {
+        console.log('value: ', value)
+        const currentIndex = checked.indexOf(value);
+        const newChecked = [...checked];
+        console.log('checked: ', checked)
+  
+      if (currentIndex === -1) {
+        newChecked.push(value);
+      } else {
+        newChecked.splice(currentIndex, 1);
+      }
+      setChecked(newChecked);
+    }
     const userEmail = 'example@email.com';
     const [todos, setTodos] = useState([]);
     const [isEditing, setIsEditing] = useState(false);
@@ -26,7 +41,7 @@ const TodoList = () => {
     useEffect(() => getTodos, [])
 
     return (
-        <Container maxWidth="xl" sx={{ p: 5, textAlign: 'center' }}>
+        <Paper elevation={8} sx={{ p: 5, textAlign: 'center', bgcolor: 'primary.light', maxWidth: 'lg', height: '100%' }}>
             { isEditing ? (
                 <EditForm
                     currentTodo={currentTodo}
@@ -37,16 +52,24 @@ const TodoList = () => {
             ) : (
                 <AddForm getTodos={getTodos} />
             )} 
-            <List sx={{ width: '100ch', flex: 'justify', m: 10 }}>
-            {/* <List sx={{ width: '100ch', textAlign: 'center', p: 5 }}> */}
-                { todos.map((todo) => (
-                            <TodoItem key={todo.id} todoItem={todo} getTodos={getTodos} isEditing={setIsEditing} setCurrentTodo={setCurrentTodo} />
-                    ))
+            <List sx={{ flex: 'justify', m: 10, bgcolor: 'secondary' }}>
+                { todos.map((todo) => {
+                    return (
+                        <TodoItem
+                            key={todo.id}
+                            todoItem={todo}
+                            getTodos={getTodos}
+                            isEditing={setIsEditing}
+                            setCurrentTodo={setCurrentTodo}
+                            checked={checked}
+                            handleToggle={handleToggle}
+                        />
+                    )
                 }
+                )}
             </List>
-        </Container>
+        </Paper>
     )
 }
 
 export default TodoList;
-// display: { xs: 'none', md: 'flex' }, mr: 1 
