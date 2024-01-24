@@ -3,6 +3,30 @@ import TodoModel from '../models/TodoModel.js'
 import log from '../conf/log.js'
 const router = express.Router()
 
+router.get('/:userEmail', async (req, res) => {
+    const { userEmail } = req.params
+    try {
+      const todoList = await TodoModel.findAll({
+        where: { user_email: userEmail },
+      })
+      res.send(todoList)
+    } catch (err) {
+      log.error(err)
+    }
+  })
+
+/**
+ * @openapi
+ * paths:
+ *  /create:
+ *    post:
+ *      summary: Create a todo item
+ *      requestBody:
+ *        description: Add a todo using user email
+ *      responses:
+ *        '200':
+ *          description: Success
+ */
 router.post('/create', async (req, res) => {
   const values = {
     user_email: req.body.data.user_email,
@@ -20,7 +44,6 @@ router.post('/create', async (req, res) => {
   }
 })
 
-//delete todo
 router.delete('/:id', async (req, res) => {
   try {
     const { id } = req.params
@@ -33,18 +56,6 @@ router.delete('/:id', async (req, res) => {
       .json({ status: 'success', message: 'Data deleted successfully' })
   } catch (err) {
     console.log(err)
-  }
-})
-
-router.get('/:userEmail', async (req, res) => {
-  const { userEmail } = req.params
-  try {
-    const todoList = await TodoModel.findAll({
-      where: { user_email: userEmail },
-    })
-    res.send(todoList)
-  } catch (err) {
-    log.error(err)
   }
 })
 

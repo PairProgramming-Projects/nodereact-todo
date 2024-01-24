@@ -5,27 +5,37 @@ import log from '../conf/log.js';
 
 const options = {
   definition: {
-    openapi: "3.0.0",
+    openapi: "3.0.3",
     info: {
       title: "TODO API Documentation",
-      version: "1.0.0"
+      version: "1.0.0",
+      description: "API Documentation for the Todo API"
     },
-    components: {
-      securitySchemes: {
-        bearerAuth: {
-          type: "http",
-          scheme: "bearer",
-          bearerFormat: "JWT",
-        },
-      },
-    },
-    security: [
-      {
-        bearerAuth: [],
-      },
+    servers: [
+        {
+            url: "http://localhost:8000/api/todos"
+        }
     ],
+    // components: 
+    //   schemas:
+    //     Todo:
+    //       type: object 
+    // components: {
+    //   securitySchemes: {
+    //     bearerAuth: {
+    //       type: "http",
+    //       scheme: "bearer",
+    //       bearerFormat: "JWT",
+    //     },
+    //   },
+    // },
+    // security: [
+    //   {
+    //     bearerAuth: [],
+    //   },
+    // ],
   },
-  apis: ["../routes/todoRoutes.js"],
+  apis: ["../routes/*.js"],
 };
 
 const swaggerSpec = swaggerJsdoc(options);
