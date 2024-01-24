@@ -30,9 +30,9 @@ const EditForm = ( {
         return (
             <Box
                 component="form"
-                sx={{
-                    '& > :not(style)': { m: 1, width: '25ch' },
-                }}
+                // sx={{
+                //     '& > :not(style)': { m: 1, width: '50ch' },
+                // }}
                 noValidate
                 autoComplete="off"
             >
@@ -43,11 +43,20 @@ const EditForm = ( {
                     variant="standard"
                     value={currentTodo.title ? currentTodo.title : ''}
                     onChange={handleEditInputChange}
+                    sx={{
+                        m: 1, width: '50ch'
+                    }}
                 />
-                <Button variant="outlined" color="primary" aria-label="add todo" onClick={handleEditFormSubmit}>
+                <Button
+                    variant="outlined"
+                    color="secondary"
+                    aria-label="add todo"
+                    onClick={handleEditFormSubmit}
+                    sx={{ width: '100px', marginRight: 1 }} 
+                >
                     Update
                 </Button>
-                <Button variant="outlined" color="primary" aria-label="add todo" onClick={ () => setIsEditing(false) }>
+                <Button variant="outlined" color="primary" aria-label="add todo" sx={{ width: '100px'}} onClick={ () => setIsEditing(false) }>
                     Cancel
                 </Button>
             </Box>
