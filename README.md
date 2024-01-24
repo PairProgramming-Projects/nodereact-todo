@@ -12,3 +12,5 @@ A simple todo application
 - Material UI
 - Yup
 
+Swagger UI:
+`http://localhost:8000/api/docs/`
