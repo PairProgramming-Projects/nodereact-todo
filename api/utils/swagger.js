@@ -1,5 +1,5 @@
-import swaggerJsdoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
+import swaggerJsdoc from "swagger-jsdoc";
 // import { version } from "../package.json" assert { type: 'json' };
 import log from '../conf/log.js';
 
@@ -13,27 +13,9 @@ const options = {
     },
     servers: [
         {
-            url: "http://localhost:8000/api/todos"
+            url: "http://localhost:8000/todos"
         }
     ],
-    // components: 
-    //   schemas:
-    //     Todo:
-    //       type: object 
-    // components: {
-    //   securitySchemes: {
-    //     bearerAuth: {
-    //       type: "http",
-    //       scheme: "bearer",
-    //       bearerFormat: "JWT",
-    //     },
-    //   },
-    // },
-    // security: [
-    //   {
-    //     bearerAuth: [],
-    //   },
-    // ],
   },
   apis: ["../routes/*.js"],
 };
@@ -50,7 +32,7 @@ const swaggerDocs = (app, port) => {
     res.send(swaggerSpec);
   });
 
-  log.info(`Docs available at http://localhost:${port}/docs`);
+  log.info(`Docs available at http://localhost:${port}/api/docs`);
 }
 
 export default swaggerDocs;

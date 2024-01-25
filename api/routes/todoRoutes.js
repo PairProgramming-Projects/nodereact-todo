@@ -3,6 +3,20 @@ import TodoModel from '../models/TodoModel.js'
 import log from '../conf/log.js'
 const router = express.Router()
 
+/**
+ * @openapi
+ * paths:
+ *  /:
+ *    get:
+ *      summary: Create a todo item
+ *      requestBody:
+ *        description: Add a todo using user email
+ *      responses:
+ *        '200':
+ *          description: Success
+ *          parameters:
+ *            - user_email: name_prefix
+ */
 router.get('/:userEmail', async (req, res) => {
     const { userEmail } = req.params
     try {
@@ -17,7 +31,6 @@ router.get('/:userEmail', async (req, res) => {
 
 /**
  * @openapi
- * paths:
  *  /create:
  *    post:
  *      summary: Create a todo item
@@ -26,6 +39,8 @@ router.get('/:userEmail', async (req, res) => {
  *      responses:
  *        '200':
  *          description: Success
+ *          content:
+ *            application/json:
  */
 router.post('/create', async (req, res) => {
   const values = {
@@ -44,6 +59,19 @@ router.post('/create', async (req, res) => {
   }
 })
 
+/**
+ * @openapi
+ *  /delete:
+ *    post:
+ *      summary: Delete a todo item
+ *      requestBody:
+ *        description: Add a todo using user email
+ *      responses:
+ *        '200':
+ *          description: Success
+ *          content:
+ *            application/json:
+ */
 router.delete('/:id', async (req, res) => {
   try {
     const { id } = req.params
@@ -59,6 +87,19 @@ router.delete('/:id', async (req, res) => {
   }
 })
 
+/**
+ * @openapi
+ *  /update:
+ *    put:
+ *      summary: Update a todo item
+ *      requestBody:
+ *        description: Add a todo using user email
+ *      responses:
+ *        '200':
+ *          description: Success
+ *          content:
+ *            application/json:
+ */
 router.put('/update/:id', async (req, res) => {
     const { id } = req.params;
     const { title } = req.body;
