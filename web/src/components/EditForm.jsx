@@ -15,7 +15,6 @@ const EditForm = ( {
         }
 
         const handleTodoUpdate = async (id, todoToUpdate) => {
-            console.log(todoToUpdate)
             const request = { ...todoToUpdate, userEmail: 'example@email.com' };
             await axios.put(`http://localhost:8000/todos/update/${id}`, request);
             setIsEditing(false);

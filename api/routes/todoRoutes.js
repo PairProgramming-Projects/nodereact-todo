@@ -51,7 +51,6 @@ router.post('/create', async (req, res) => {
   }
   try {
     const newTodo = await TodoModel.create(values)
-    console.log('new todo : ', newTodo)
     return res.status(201).json({ status: 'success', message: 'Data saved successfully' });
   } catch (err) {
     log.error(err)

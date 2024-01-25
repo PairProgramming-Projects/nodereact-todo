@@ -18,7 +18,6 @@ const TodoItem = ( { todoItem, getTodos, isEditing, setCurrentTodo, checked, han
     const deleteTodo = async(id)=>{
         try {
           const deleteResponse = await axios.delete(`http://localhost:8000/todos/${id}`)
-          console.log(deleteResponse)
           
           if(deleteResponse.status === 204){
             getTodos()
