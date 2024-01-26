@@ -116,4 +116,22 @@ router.put('/update/:id', async (req, res) => {
     }
   })
 
+
+  // Delete all selected IDs
+  router.delete('/delete', async (req, res) => {
+    const { ids } = req.body;
+    try {
+        await TodoModel.destroy(
+        {
+            title
+        },
+        {
+            where: { id: ids },
+        })
+        res.status(204).json({ status: 'Success', message: 'Data updated successfully' });
+    } catch (err) {
+      log.error(err)
+    }
+  })
+
 export default router

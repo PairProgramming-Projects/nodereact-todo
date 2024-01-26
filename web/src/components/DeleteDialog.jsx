@@ -19,10 +19,10 @@ const DeleteAllDialog = ( { open, setOpen, getTodos, selectedItems, setSelectedI
   };
 
   const handleDeleteAll = async (selectedItems) => {
-    const itemsToDelete = { items: selectedItems };
+    console.log(selectedItems)
+    const itemsToDelete = { ids: selectedItems };
     try {
-      const deleteResponse = await axios.delete(`http://localhost:8000/todos/`, itemsToDelete)
-      
+      const deleteResponse = await axios.delete(`http://localhost:8000/todos`, itemsToDelete)
       if(deleteResponse.status === 204){
         getTodos();
         setOpen(false);
@@ -49,8 +49,8 @@ const DeleteAllDialog = ( { open, setOpen, getTodos, selectedItems, setSelectedI
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleDeleteAll(selectedItems)}>Yes</Button>
-          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={ () => handleDeleteAll(selectedItems) }>Yes</Button>
+          <Button onClick={ () => handleClose() }>Cancel</Button>
         </DialogActions>
       </Dialog>
     </>
