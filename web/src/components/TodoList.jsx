@@ -7,36 +7,48 @@ import AddForm from './AddForm';
 import EditForm from './EditForm';
 import '../App.css';
 import Note from './Note';
+import { Button } from '@mui/material';
+import DeleteAllDialog from './DeleteDialog';
 
 const TodoList = () => {
-    const [checked, setChecked] = useState([0]);
+    // const [checked, setChecked] = useState([]);
     const userEmail = 'example@email.com';
     const [todos, setTodos] = useState([]);
     const [count, setCount] = useState(0);
     const [isEditing, setIsEditing] = useState(false);
     const [currentTodo, setCurrentTodo] = useState({});
+    const [selectedItems, setSelectedItems] = useState([]);
+    const [open, setOpen] = useState(false);
 
-    const handleToggle = (value) => () => {
-        const currentIndex = checked.indexOf(value);
-        const newChecked = [...checked];
+    const checkboxHandler = (e) => {
+      let isSelected = e.target.checked;
+      let value = parseInt(e.target.value);
   
-        if (currentIndex === -1) {
-            newChecked.push(value);
-        } else {
-            newChecked.splice(currentIndex, 1);
-        }
-        setChecked(newChecked);
+      if( isSelected ){
+        setSelectedItems( [...selectedItems, value ] )
+      } else {
+        setSelectedItems( (prevData) => {
+          return prevData.filter( (id) => {
+            return id !== value;
+          })
+        })
+      }
     }
 
     const getTodos = async () => {
-        try {
-            const response = (
-            await axios.get(`http://localhost:8000/todos/${userEmail}`)).data
-            setTodos(response)
-            setCount(response.length)
-        } catch (err) {
-          console.log(err)
-        }
+      try {
+          const response = (
+          await axios.get(`http://localhost:8000/todos/${userEmail}`)).data
+          setTodos(response)
+          setCount(response.length)
+      } catch (err) {
+        console.log(err)
+      }
+    }
+
+    const handleClickDeleteAllDialog = () => {
+        console.log(selectedItems)
+        setOpen(true)
     }
         
     useEffect(() => getTodos, [])
@@ -54,19 +66,30 @@ const TodoList = () => {
                 <AddForm getTodos={getTodos} />
             )}
             <Note count={count} sx={{ mt: 200, p: 100 }} />
-            <Paper elevation={0} sx={{ p: 5, textAlign: 'center', bgcolor: 'primary.light'}} >
+
+            { selectedItems.length > 0 ? (
+              <Paper elevation={0} sx={{ mt: 2, display: 'flex', justifyContent: 'center', bgcolor: 'primary.light' }}>
+                <Button variant='outlined' sx={{ mr: 1 }} onClick={ () => handleClickDeleteAllDialog() } >Delete selected items</Button>
+                <Button variant='outlined' sx={{ ml: 1 }} onClick={ () => setSelectedItems([]) } >Unselect items</Button>
+              </Paper>
+              ) : (
+              <Button disabled sx={{ mt: 2 }}/>
+            )}
+
+            { open ? <DeleteAllDialog open={open} setOpen={setOpen} getTodos={getTodos} selectedItems={selectedItems} setSelectedItems={setSelectedItems} /> : '' }
+
+            <Paper elevation={0} sx={{ display: 'flex', justifyContent: 'center', bgcolor: 'primary.light'}} >
                 <List sx={{ flex: 'justify', m: 5, bgcolor: 'secondary' }}>
-                    { todos.map((todo) => {
+                    { todos.map((todo, index) => {
                         return (
                             <TodoItem
-                            // index={index}
-                            key={todo.id}
+                            key={index}
                             todoItem={todo}
                             getTodos={getTodos}
                             isEditing={setIsEditing}
                             setCurrentTodo={setCurrentTodo}
-                            checked={checked}
-                            handleToggle={handleToggle}
+                            checkboxHandler={checkboxHandler}
+                            selectedItems={selectedItems}
                             />
                             )
                         }

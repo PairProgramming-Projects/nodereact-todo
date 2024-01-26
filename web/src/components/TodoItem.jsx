@@ -14,11 +14,10 @@ import axios from 'axios';
 // import ListItemIcon from '@mui/material/ListItemIcon';
 // import CommentIcon from '@mui/icons-material/Comment';
 
-const TodoItem = ( { todoItem, getTodos, isEditing, setCurrentTodo, checked, handleToggle } ) => {
-    const deleteTodo = async(id)=>{
+const TodoItem = ( { todoItem, getTodos, isEditing, setCurrentTodo, checkboxHandler, selectedItems } ) => {
+    const deleteTodo = async (id) => {
         try {
           const deleteResponse = await axios.delete(`http://localhost:8000/todos/${id}`)
-          console.log(deleteResponse)
           
           if(deleteResponse.status === 204){
             getTodos()
@@ -36,7 +35,7 @@ const TodoItem = ( { todoItem, getTodos, isEditing, setCurrentTodo, checked, han
     return (
         <ListItem
             key={todoItem.id}
-            sx={{ backgroundColor: '#eeeeee', borderRadius: '12px', margin: '5px', paddingRight: '15px', maxWidth: 'md' }}
+            sx={{ backgroundColor: '#eeeeee', borderRadius: '12px', margin: '5px', paddingRight: '15px', width: '50vw', maxWidth: 'md' }}
             // secondaryAction={
             //   <IconButton edge="end" aria-label="comments">
             //     <CommentIcon color="primary"/>
@@ -50,10 +49,11 @@ const TodoItem = ( { todoItem, getTodos, isEditing, setCurrentTodo, checked, han
                     icon={<RadioButtonUncheckedIcon />}
                     checkedIcon={<CheckCircleIcon />}
                     edge="start"
-                    checked={checked.indexOf(todoItem.id) !== -1}
+                    checked={ selectedItems.includes(todoItem.id) }
                     tabIndex={-1}
                     inputProps={{ 'aria-labelledby': todoItem.id }}
-                    onChange={handleToggle(todoItem.id)}
+                    onChange={checkboxHandler}
+                    value={todoItem.id}
                 />
             </ListItemIcon>
             <ListItemText id={todoItem.id} primary={todoItem.title} />

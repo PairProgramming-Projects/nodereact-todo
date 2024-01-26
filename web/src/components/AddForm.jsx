@@ -27,7 +27,7 @@ const AddForm = ( { getTodos } ) => {
         e.preventDefault()
         try {
             if( data.title !== '') {
-                const response = await axios.post('http://localhost:8000/todos/create', {
+                await axios.post('http://localhost:8000/todos/create', {
                     data: data,
                 },{
                     headers: {
@@ -36,7 +36,6 @@ const AddForm = ( { getTodos } ) => {
                 })
                 getTodos()
                 setData( { title: '' } )
-                console.log('add form submit response:', response)
             }
         } catch (error) {
             console.log(error)
